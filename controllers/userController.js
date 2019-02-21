@@ -57,6 +57,22 @@ module.exports.validateUser = (req, res, next) => {
     }
 }
 
+module.exports.thirdPartyUser = (req, res, next) => {
+    var tokenObj = {
+        name: req.body.name,
+        email: req.body.email,
+        id: req.body.id
+    }
+    var token = auth.signToken(tokenObj);
+    res.json({
+        token: token, user: {
+            name: req.body.name,
+            email: req.body.email,
+            id: req.body.id
+        }
+    });
+}
+
 module.exports.addOneSearchRoute = (req, res, next) => {
     var regex = /:\/\/(.[^/]+)/
     var matchGroups = regex.exec(req.body.url)
